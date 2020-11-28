@@ -409,15 +409,18 @@ class EvolutionFinder:
 			time = 9999999
 			iter = 0
 			idx = len(self.arch_manager.kernel_sizes)-2
-			options = [1,2,3]
+			options = [1,2,3,4]
 			i1 = 0
 			i2 = 0
 			i3 = 0
 			idx1 = len(self.arch_manager.kernel_sizes)-2
 			idx2 = len(self.arch_manager.depths)-2
 			idx3 = len(self.arch_manager.expand_ratios)-2
+			idx4 = len(self.arch_manager.resolutions)-2
 			while time > constraint and len(options) > 0:
 				choice = random.choice(options)
+				#if (choice == 4):
+					#choice = random.choice(options)
 				if (choice == 1):
 					if (i1 >= len(info['ks'])):
 						i1 = 0
@@ -446,7 +449,7 @@ class EvolutionFinder:
 								time = self.efficiency_predictor.predict_efficiency(info)
 								chng = False
 							i2 += 1
-				else:
+				elif (choice == 3):
 					if (i3 >= len(info['e'])):
 						i3 = 0
 						idx3 -= 1
@@ -460,6 +463,15 @@ class EvolutionFinder:
 								time = self.efficiency_predictor.predict_efficiency(info)
 								chng = False
 							i3 += 1
+				else :
+					if (idx4 < 0):
+						options.remove(choice)
+					else:
+						if info['r'][0] > self.arch_manager.resolutions[idx4]:
+							info['r'][0] = self.arch_manager.resolutions[idx4]
+							time = self.efficiency_predictor.predict_efficiency(info)
+							#options.remove(choice)
+						idx4 -= 1
 			time = self.efficiency_predictor.predict_efficiency(info)
 			r_best_valids[k] =  self.accuracy_predictor.predict_accuracy([info])
 			r_best_info[k] = [self.accuracy_predictor.predict_accuracy([info]),info,time]
@@ -545,15 +557,18 @@ class EvolutionFinder:
 			time = 9999999
 			iter = 0
 			idx = len(self.arch_manager.kernel_sizes)-2
-			options = [1,2,3]
+			options = [1,2,3,4]
 			i1 = 0
 			i2 = 0
 			i3 = 0
 			idx1 = len(self.arch_manager.kernel_sizes)-2
 			idx2 = len(self.arch_manager.depths)-2
 			idx3 = len(self.arch_manager.expand_ratios)-2
+			idx4 = len(self.arch_manager.resolutions)-2
 			while time > constraint and len(options) > 0:
 				choice = random.choice(options)
+				#if (choice == 4):
+					#choice = random.choice(options)
 				if (choice == 1):
 					if (i1 >= len(info['ks'])):
 						i1 = 0
@@ -582,7 +597,7 @@ class EvolutionFinder:
 								time = self.efficiency_predictor.predict_efficiency(info)
 								chng = False
 							i2 += 1
-				else:
+				elif (choice == 3):
 					if (i3 >= len(info['e'])):
 						i3 = 0
 						idx3 -= 1
@@ -596,6 +611,15 @@ class EvolutionFinder:
 								time = self.efficiency_predictor.predict_efficiency(info)
 								chng = False
 							i3 += 1
+				else :
+					if (idx4 < 0):
+						options.remove(choice)
+					else:
+						if info['r'][0] > self.arch_manager.resolutions[idx4]:
+							info['r'][0] = self.arch_manager.resolutions[idx4]
+							time = self.efficiency_predictor.predict_efficiency(info)
+							#options.remove(choice)
+						idx4 -= 1
 			time = self.efficiency_predictor.predict_efficiency(info)
 			acc = self.accuracy_predictor.predict_accuracy([info])
 			best_valids = [-100]
