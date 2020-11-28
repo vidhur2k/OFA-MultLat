@@ -84,7 +84,7 @@ def count_net_flops(net, data_shape=(1, 3, 224, 224)):
 	return flop
 
 
-def measure_net_latency(net, l_type='gpu8', fast=True, input_shape=(3, 224, 224), clean=False):
+def measure_net_latency(net, l_type='gpu8', fast=True, input_shape=(3, 224, 224), clean=True):
 	if isinstance(net, nn.DataParallel):
 		net = net.module
 

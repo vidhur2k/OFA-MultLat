@@ -1,5 +1,6 @@
 import yaml
 from ofa.utils import download_url
+from ofa.utils import get_net_info
 
 
 class LatencyEstimator(object):
@@ -162,3 +163,31 @@ class LatencyTable:
 
     def predict_efficiency(self, spec: dict):
         return self.latency_tables[spec['r'][0]].predict_network_latency_given_spec(spec)
+
+class LatencyTableReal:
+    def __init__(self, net, device='cpu', resolutions=(160, 176, 192, 208, 224)):
+        self.net = net
+        self.device = device
+        self.latdict = {}
+
+        #for image_size in resolutions:
+            #self.latency_tables[image_size] = LatencyEstimator(
+                #url='https://hanlab.mit.edu/files/OnceForAll/tutorial/latency_table@%s/%d_lookup_table.yaml' % (
+                    #device, image_size)
+            #)
+            #print('Built latency table for image size: %d.' % image_size)
+
+    def predict_efficiency(self, spec: dict):
+        #key = []
+        #for val in spec.values():
+            #key.append(val)
+        #if key in self.latdict.keys():
+            #return latdict[key]
+        subnet = self.net.set_active_subnet(ks = spec['ks'],d = spec['d'],e = spec['e'])
+        subnet = self.net.get_active_subnet(preserve_weight=True)
+        net_info = get_net_info(subnet, input_shape=( 3, spec['r'][0], spec['r'][0]), measure_latency = self.device, print_info = False)
+        rv = net_info['%s latency' % self.device]['val']
+        #self.latdict[key] = rv
+        print(rv)
+        return rv
+        #return self.latency_tables[spec['r'][0]].predict_network_latency_given_spec(spec)
