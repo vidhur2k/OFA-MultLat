@@ -216,7 +216,10 @@ class EvolutionFinder:
 		return best_valids, best_info
 
 	def run_evolution_search_multi(self, verbose=False):
-		"""A modified version which runs for multiple latency constraints"""
+		"""
+		CS 8803 OVER HERE!!!
+		Bottom-up approach that runs the evolutionary search for multiple latency targets.
+		"""
 		max_time_budget = self.max_time_budget
 		max_time_budget2 = self.max_time_budget2
 		population_size = self.population_size
@@ -334,7 +337,6 @@ class EvolutionFinder:
 		return r_best_valids, r_best_info
 
 	def run_evolution_search_multi_pruning(self, verbose=False):
-		"""A modified version which runs for multiple latency constraints"""
 		max_time_budget = self.max_time_budget
 		max_time_budget2 = self.max_time_budget2
 		population_size = self.population_size
@@ -467,7 +469,10 @@ class EvolutionFinder:
 		return r_best_valids, r_best_info
 
 	def run_evolution_search_multi_mixed(self, verbose=False):
-		"""A modified version which runs for multiple latency constraints"""
+		"""
+		CS 8803 OVER HERE!!!
+		Top-down approach that runs the evolutionary search for multiple latency targets.
+		"""
 		max_time_budget = self.max_time_budget
 		max_time_budget2 = self.max_time_budget2
 		population_size = self.population_size
